@@ -66,6 +66,7 @@ body {
    padding-top: 5px;
    color: white;
    background-color: #83D8F3;
+   border: solid 2px #83D8F3;
    border-radius: 6px;
    font-weight: 600;
    cursor: pointer;
