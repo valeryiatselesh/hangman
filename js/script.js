@@ -118,12 +118,24 @@ window.onload = function () {
       }
    }
 
-   function startGame() {
-      addHeader();
-      addMain();
-      addGame();
-      addLetters();
-      hangmanImg.src = 'img/hangman-start.svg';
+   addHeader();
+   addMain();
+   addGame();
+   addLetters();
+
+   let currentWord;
+
+   function getRandomWord() {
+      const { hint, word } = wordsList[Math.floor(Math.random() * wordsList.length)];
+      document.querySelector(".hint").innerText = hint;
+      currentWord = word;
+      startGame();
    }
-   startGame();
+
+   function startGame() {
+      hangmanImg.src = 'img/hangman-start.svg';
+      guessWord.innerHTML = currentWord;
+   }
+
+   getRandomWord();
 }
