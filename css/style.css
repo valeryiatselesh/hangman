@@ -37,6 +37,10 @@ body {
 .word {
 
 }
+.word__letter {
+   font-size: 80px;
+   padding-right: 20px;
+}
 .hint {
 
 }

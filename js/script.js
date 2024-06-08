@@ -138,6 +138,10 @@ window.onload = function () {
       hangmanImg.src = 'img/hangman-start.svg';
       guessWord.innerHTML = currentWord;
       score.innerHTML = `${currentScore} / ${maxScore}`;
+
+      let displayWord = currentWord.replace(/./g, '<span class="word__letter">_</span>');
+      guessWord.innerHTML = displayWord;
+      console.log(currentWord);
    }
 
    getRandomWord();
