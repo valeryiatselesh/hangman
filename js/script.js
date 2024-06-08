@@ -104,18 +104,11 @@ window.onload = function () {
    function addLetters() {
       keyboard = document.createElement('div');
       keyboard.className = 'keyboard';
-      letters = document.createElement('ul');
+      lettersList = document.createElement('ul');
+      lettersList.className = 'keyboard__list';
       game.appendChild(keyboard);
-      keyboard.appendChild(letters);
 
-      for (let i = 0; i < alphabet.length; i++) {
-         letters.className = 'keyboard__list';
-         list = document.createElement('li');
-         list.className = 'keyboard__letter';
-         list.innerHTML = alphabet[i];
-         keyboard.appendChild(letters);
-         letters.appendChild(list);
-      }
+      keyboard.appendChild(lettersList);
    }
 
    addHeader();
@@ -131,10 +124,10 @@ window.onload = function () {
       const { hint, word } = wordsList[Math.floor(Math.random() * wordsList.length)];
       document.querySelector(".hint").innerText = hint;
       currentWord = word;
-      startGame();
+      currentWord = currentWord.toUpperCase();
    }
 
-   function startGame() {
+   function startGameSettings() {
       hangmanImg.src = 'img/hangman-start.svg';
       guessWord.innerHTML = currentWord;
       score.innerHTML = `${currentScore} / ${maxScore}`;
@@ -144,5 +137,31 @@ window.onload = function () {
       console.log(currentWord);
    }
 
+   function initGame() {
+      for (let i = 65; i < 91; i++) {
+         letterBtn = document.createElement('li');
+         letterBtn.className = 'keyboard__letter';
+
+         letterBtn.innerText = String.fromCharCode(i);
+
+         letterBtn.addEventListener('click', (e) => {
+            let letterArray = currentWord.split('');
+            let dashes = document.getElementsByClassName('word__letter');
+            console.log(letterArray);
+            if (letterArray.includes(e.target.innerText)) {
+               letterArray.forEach((letter, index) => {
+                  if (letter === e.target.innerText) {
+                     dashes[index].innerText = letter;
+                  }
+               });
+            }
+            console.log(e.target.innerText)
+         })
+         lettersList.appendChild(letterBtn);
+      }
+   }
+   
+   initGame();
    getRandomWord();
+   startGameSettings();
 }
