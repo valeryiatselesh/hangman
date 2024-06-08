@@ -1,7 +1,68 @@
 window.onload = function () {
-   const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-      'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-      't', 'u', 'v', 'w', 'x', 'y', 'z'];
+   const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+   const wordsList = [
+      {
+         hint: 'The Great Wall is located in this country.',
+         word: 'china'
+      },
+      {
+         hint: 'This sea creature has three hearts.',
+         word: 'octopus'
+      },
+      {
+         hint: 'It is the national animal of India',
+         word: 'tiger'
+      },
+      {
+         hint: 'Sun rises in the ...',
+         word: 'east'
+      },
+      {
+         hint: 'The first Olympic Games were held in this country',
+         word: 'Greece'
+      },
+      {
+         hint: 'Mammal known for the most powerful bite in the world',
+         word: 'hippopotamus'
+      },
+      {
+         hint: 'It is the hardest substance on Earth',
+         word: 'diamond'
+      },
+      {
+         hint: 'Christopher Columbus was born in this country',
+         word: 'Italy'
+      },
+      {
+         hint: 'We wear it on our hands to see the time',
+         word: 'wristwatch'
+      },
+      {
+         hint: 'It is the definition of a person who is obsessed with work',
+         word: 'workaholic' 
+      },
+      {
+         hint: 'The fastest mammal in the world',
+         word: 'hippard'
+      },
+      {
+         hint: 'The planet is known as the Red Planet',
+         word: 'Mars' 
+      },
+      {
+         hint: 'The element is known as the building block of life',
+         word: 'Carbon' 
+      },
+      {
+         hint: 'The capital city of Canada',
+         word: 'Ottawa' 
+      },
+      {
+         hint: 'The longest river in the world',
+         word: 'Nile' 
+      }
+   ]
 
    function addHeader() {
       header = document.createElement('header');
