@@ -62,6 +62,7 @@ window.onload = function () {
       addMain();
       addGame();
       addLetters();
+      hangmanImg.src = 'img/hangman-start.svg';
    }
    startGame();
 }
