@@ -123,7 +123,9 @@ window.onload = function () {
    addGame();
    addLetters();
 
-   let currentWord;
+   let currentWord,
+       currentScore = 0;
+   const maxScore = 6;
 
    function getRandomWord() {
       const { hint, word } = wordsList[Math.floor(Math.random() * wordsList.length)];
@@ -135,6 +137,7 @@ window.onload = function () {
    function startGame() {
       hangmanImg.src = 'img/hangman-start.svg';
       guessWord.innerHTML = currentWord;
+      score.innerHTML = `${currentScore} / ${maxScore}`;
    }
 
    getRandomWord();
