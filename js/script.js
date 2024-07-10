@@ -139,11 +139,23 @@ window.onload = function () {
        currentScore = 0;
    const maxScore = 6;
 
+   function firstIndex(previousIndex) {
+      let nextIndex = previousIndex;
+      while(nextIndex === previousIndex) {
+         nextIndex = wordsList[Math.floor(Math.random() * wordsList.length)];
+      }
+      return nextIndex;
+   };
+   
+   let currentIndex = firstIndex(-1);
+
    function getRandomWord() {
-      const { hint, word } = wordsList[Math.floor(Math.random() * wordsList.length)];
+      const { hint, word } = currentIndex;
       document.querySelector(".hint").innerText = hint;
       currentWord = word;
       currentWord = currentWord.toUpperCase();
+      document.body.style.overflow = 'visible';
+      startGameSettings();
    }
 
    function startGameSettings() {
