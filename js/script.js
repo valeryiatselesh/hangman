@@ -1,5 +1,4 @@
 window.onload = function () {
-
    const wordsList = [
       {
          hint: 'The Great Wall is located in this country.',
@@ -68,7 +67,6 @@ window.onload = function () {
       title = document.createElement('h1');
       title.className = 'title';
       title.innerText = 'Hangman Game';
-
       document.body.prepend(header);
       header.appendChild(title);
    }
@@ -106,14 +104,36 @@ window.onload = function () {
       lettersList = document.createElement('ul');
       lettersList.className = 'keyboard__list';
       game.appendChild(keyboard);
-
       keyboard.appendChild(lettersList);
+   }
+
+   function createModal() {
+      modal = document.createElement('div');
+      modal.className = 'modal';
+      main.after(modal);
+      modalDialog = document.createElement('div');
+      modalDialog.className = 'modal__dialog';
+      modal.appendChild(modalDialog);
+      modalContent = document.createElement('div');
+      modalContent.className = 'modal__content';
+      modalDialog.appendChild(modalContent);
+      modalTitle = document.createElement('h3');
+      modalTitle.className = 'modal__title';
+      modalContent.appendChild(modalTitle);
+      modalWord = document.createElement('p');
+      modalWord.className = 'modal__word';
+      modalContent.appendChild(modalWord);
+      modalBtn = document.createElement('button');
+      modalBtn.className = 'modal__btn';
+      modalBtn.innerText = 'Play again'
+      modalContent.appendChild(modalBtn);
    }
 
    addHeader();
    addMain();
    addGame();
    addLetters();
+   createModal();
 
    let currentWord,
        currentScore = 0;
@@ -154,7 +174,8 @@ window.onload = function () {
                   }
                });
             }
-            console.log(e.target.innerText)
+            e.target.className = 'keyboard__letter keyboard__letter_disable';
+            console.log(e.target.innerText);
          })
          lettersList.appendChild(letterBtn);
       }

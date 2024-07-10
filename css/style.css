@@ -76,6 +76,12 @@ body {
    color: #83D8F3;
    background-color: white;
 }
+.keyboard__letter_disable {
+   pointer-events: none;
+   background-color: white;
+   color: gray;
+   border-color: gray;
+}
 @media (max-width: 980px) {
    body {
       font-size: 18px;
