@@ -159,13 +159,22 @@ window.onload = function () {
    }
 
    function startGameSettings() {
+      currentScore = 0;
+      correctLetters = 0;
       hangmanImg.src = 'img/hangman-start.svg';
       guessWord.innerHTML = currentWord;
       score.innerHTML = `${currentScore} / ${maxScore}`;
 
-      let displayWord = currentWord.replace(/./g, '<span class="word__letter">_</span>');
+      let displayWord = currentWord.replace(/./g, '<li class="word__letter">_</li>');
       guessWord.innerHTML = displayWord;
       console.log(currentWord);
+
+      let pressButtons = document.querySelectorAll(".keyboard__letter");
+      pressButtons.forEach((button) => {
+         button.disabled = false;
+      });
+
+      modal.className = 'modal';
    }
 
    function initGame() {
