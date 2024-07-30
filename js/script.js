@@ -61,7 +61,6 @@ window.onload = function () {
          word: 'Nile' 
       }
    ]
-
    function addHeader() {
       header = document.createElement('header');
       title = document.createElement('h1');
@@ -70,7 +69,6 @@ window.onload = function () {
       document.body.prepend(header);
       header.appendChild(title);
    }
-
    function addMain() {
       main = document.createElement('main');
       main.className = 'main';
@@ -85,7 +83,6 @@ window.onload = function () {
       game.className = 'game';
       main.appendChild(game);
    }
-
    function addGame() {
       guessWord = document.createElement('ul');
       guessWord.className = 'word';
@@ -97,7 +94,6 @@ window.onload = function () {
       score.className = 'score';
       game.appendChild(score);
    }
-
    function addLetters() {
       keyboard = document.createElement('div');
       keyboard.className = 'keyboard';
@@ -106,7 +102,6 @@ window.onload = function () {
       game.appendChild(keyboard);
       keyboard.appendChild(lettersList);
    }
-
    function createModal() {
       modal = document.createElement('div');
       modal.className = 'modal';
@@ -128,17 +123,14 @@ window.onload = function () {
       modalBtn.innerText = 'Play again'
       modalContent.appendChild(modalBtn);
    }
-
    addHeader();
    addMain();
    addGame();
    addLetters();
    createModal();
-
    let currentWord,
        currentScore = 0;
    const maxScore = 6;
-
    function firstIndex(previousIndex) {
       let nextIndex = previousIndex;
       while(nextIndex === previousIndex) {
@@ -146,9 +138,7 @@ window.onload = function () {
       }
       return nextIndex;
    };
-   
    let currentIndex = firstIndex(-1);
-
    function getRandomWord() {
       const { hint, word } = currentIndex;
       document.querySelector(".hint").innerText = hint;
@@ -157,52 +147,82 @@ window.onload = function () {
       document.body.style.overflow = 'visible';
       startGameSettings();
    }
-
    function startGameSettings() {
       currentScore = 0;
       correctLetters = 0;
       hangmanImg.src = 'img/hangman-start.svg';
       guessWord.innerHTML = currentWord;
       score.innerHTML = `${currentScore} / ${maxScore}`;
-
       let displayWord = currentWord.replace(/./g, '<li class="word__letter">_</li>');
       guessWord.innerHTML = displayWord;
       console.log(currentWord);
-
       let pressButtons = document.querySelectorAll(".keyboard__letter");
       pressButtons.forEach((button) => {
          button.disabled = false;
       });
-
       modal.className = 'modal';
    }
-
-   function initGame() {
-      for (let i = 65; i < 91; i++) {
-         letterBtn = document.createElement('li');
-         letterBtn.className = 'keyboard__letter';
-
-         letterBtn.innerText = String.fromCharCode(i);
-
-         letterBtn.addEventListener('click', (e) => {
-            let letterArray = currentWord.split('');
-            let dashes = document.getElementsByClassName('word__letter');
-            console.log(letterArray);
-            if (letterArray.includes(e.target.innerText)) {
-               letterArray.forEach((letter, index) => {
-                  if (letter === e.target.innerText) {
-                     dashes[index].innerText = letter;
-                  }
-               });
-            }
-            e.target.className = 'keyboard__letter keyboard__letter_disable';
-            console.log(e.target.innerText);
-         })
-         lettersList.appendChild(letterBtn);
-      }
+   function disableLetters() {
+      let pressButtons = document.querySelectorAll(".keyboard__letter");
+      pressButtons.forEach((button) => {
+         button.disabled = true;
+      });
    }
-
-   initGame();
+   function initGame(btn, initBtn) {
+      let letterArray = currentWord.split('');
+      let dashes = document.getElementsByClassName('word__letter');
+      if (letterArray.includes(initBtn)) {
+         letterArray.forEach((letter, index) => {
+            if (letter === initBtn) {
+               dashes[index].innerText = letter;
+               correctLetters++;
+            }
+         });
+      } else {
+         currentScore++;
+         hangmanImg.src = `img/hangman-${currentScore}.svg`;
+      }
+      score.innerHTML = `${currentScore} / ${maxScore}`;
+      if (currentScore == 6) {
+         disableLetters();
+         setTimeout(() => {
+            modal.className = 'modal modal_show';
+            modalTitle.innerText = 'You loose!';
+            modalWord.innerText = `The mystery word was: ${currentWord}`;
+            document.body.style.overflow = 'hidden';
+         }, 500);
+      }
+      if (correctLetters == currentWord.length) {
+         disableLetters();
+         setTimeout(() => {
+            modal.className = 'modal modal_show';
+            modalTitle.innerText = 'You win!';
+            modalWord.innerText = `The mystery word was: ${currentWord}`;
+            document.body.style.overflow = 'hidden';
+         }, 500);
+      }
+      btn.disabled = true;
+   }
+   for (let i = 65; i < 91; i++) {
+      letterBtn = document.createElement('button');
+      letterBtn.className = 'keyboard__letter';
+      letterBtn.innerText = String.fromCharCode(i);
+      lettersList.appendChild(letterBtn);
+      letterBtn.addEventListener('click', (e) => initGame(e.target, String.fromCharCode(i)))
+   }
+   document.addEventListener('keydown', (e) => {
+      const pressedKey = e.key.toUpperCase();
+      const btnVirtualKeyboard = document.querySelectorAll('.keyboard__letter');
+      btnVirtualKeyboard.forEach(button => {
+         if (button.innerText == pressedKey && !button.disabled) {
+            initGame(button, pressedKey)
+         }
+      })
+   })
    getRandomWord();
-   startGameSettings();
+   const playAgainBtn = document.querySelector('.modal__btn');
+   playAgainBtn.addEventListener('click', () => {
+      currentIndex = firstIndex(currentIndex);
+      getRandomWord();
+   });
 }
